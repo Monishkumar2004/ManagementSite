@@ -146,4 +146,11 @@ MEDIA_ROOT = BASE_DIR/ 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# setting the user model to which we have created in apps.models.py
 AUTH_USER_MODEL  = "app.CustomUser"
+
+AUTHENICATION_BACKENDS = [
+    'app.EmailBackend.EmailBackend',
+    'django.contib.auth.backends.ModelBackend',
+]
