@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse  # Import necessary functions for rendering and redirecting
-from app.EmailBackend import EmailBackend  # Import the custom EmailBackend for authentication
+# from app.EmailBackend import EmailBackend  # Import the custom EmailBackend for authentication
 from django.contrib.auth import authenticate, login, logout  # Import authentication functions
 
 def base(request):
