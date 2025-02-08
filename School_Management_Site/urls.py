@@ -23,6 +23,16 @@ from . import views, HOD_views, Staff_views, Student_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('base/', views.base, name = "base"),
-    path('', views.login_view, name = "login"),
+
+    # login paths
+    path('', views.login_view, name = "login_path"),
     path('doLogin/', views.doLogin, name = "doLogin"),
+    path('doLogout/', views.doLogout, name = "doLogout_path"),
+
+    # Profile path
+    path('profile/', views.profile, name = "profile_path"),
+    path('update_profile/', views.update_profile, name = "update_profile_path"),
+
+    # HOD paths
+    path('Hod/home/', HOD_views.home, name = "hod_home"),
 ] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
