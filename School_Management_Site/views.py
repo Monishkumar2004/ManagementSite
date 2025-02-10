@@ -60,6 +60,7 @@ def doLogout(request):
 
 
 # Profile Views
+@login_required(login_url="/")
 def profile(request):
 
     user = CustomUser.objects.get(id = request.user.id)
@@ -70,6 +71,8 @@ def profile(request):
 
     return render(request, 'profile.html', context)
 
+
+@login_required(login_url="/")
 def update_profile(request):
 
     if request.method == "POST":
@@ -92,8 +95,6 @@ def update_profile(request):
 
             if profile_picture != None and profile_picture != "":
                 customuser.profile_pic = profile_picture
-            else:
-                customuser.profile_pic = "media/default.jpg"
 
             customuser.save()
 
