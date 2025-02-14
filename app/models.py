@@ -24,3 +24,33 @@ class CustomUser(AbstractUser):
 
     # Field to store profile picture of the user
     profile_pic = models.ImageField(upload_to="profile_pics")  # Uploads profile pictures to specified directory
+
+class Course(models.Model):
+    """
+    Represents a course offered in the school.
+
+    Attributes:
+        name (CharField): The name of the course (e.g., "Mathematics", "History").  Max length of 100 characters.
+        created_at (DateTimeField):  The date and time when the course was created.  Automatically set when the object is first created.
+        updated_at (DateTimeField): The date and time when the course was last updated. Automatically updated whenever the object is saved.
+
+    Methods:
+        __str__():  Returns the name of the course as a string representation of the object.  This is useful for displaying the course in the admin panel and other places.
+    """
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class Session_Year(models.Model):
+    """
+    Represents an academic session year (e.g., 2023-2024).
+
+    Attributes:
+        session_start (CharField): The starting year of the session.  Max length of 100 characters.
+        session_end (CharField): The ending year of the session. Max length of 100 characters.
+    """
+    session_start = models.CharField(max_length = 100)
+    session_end = models.CharField(max_length = 100)
