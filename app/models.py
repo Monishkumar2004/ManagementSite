@@ -54,3 +54,31 @@ class Session_Year(models.Model):
     """
     session_start = models.CharField(max_length = 100)
     session_end = models.CharField(max_length = 100)
+
+
+class Student(models.Model):
+    """
+    Represents a student in the school.
+
+    Attributes:
+        admin (OneToOneField): A one-to-one relationship with the CustomUser model, providing authentication and user details.  Uses CASCADE to delete student when the related user is deleted.
+        address (TextField): The student's address.
+        gender (CharField): The student's gender. Max length of 100 characters.
+        course_id (ForeignKey): A foreign key to the Course model, representing the course the student is enrolled in.  Uses DO_NOTHING to prevent accidental deletion of courses affecting student records (though this might need review depending on desired behavior).
+        Session_Year_id (ForeignKey): A foreign key to the Session_Year model, representing the academic session the student is enrolled in. Uses DO_NOTHING for similar reasons as course_id.
+        created_at (DateTimeField): The date and time when the student record was created.
+        updated_at (DateTimeField): The date and time when the student record was last updated.
+
+    Methods:
+        __str__(): Returns the student's full name (first name and last name) as a string representation.
+    """
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    address = models.TextField()
+    gender = models.CharField(max_length=100)
+    course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
+    Session_Year_id = models.ForeignKey(Session_Year, on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+    def __str__(self):
+        return self.admin.first_name + " " + self.admin.last_name
