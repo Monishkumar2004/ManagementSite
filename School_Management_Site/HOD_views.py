@@ -19,3 +19,10 @@ def home(request):
     # The 'render' function combines the template with the context (in this case, an empty context)
     # to produce the final HTML output.
     return render(request, 'HOD/home.html')
+
+@login_required(login_url = '/')
+def add_student(request):
+    '''
+    Function to add students only accessible to the HOD
+    '''
+    return render(request, 'HOD/add_student.html')

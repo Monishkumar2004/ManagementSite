@@ -7,8 +7,10 @@
                      <li class="menu-title">
                         <span>Main Menu</span>
                      </li>
-                     <li class="submenu active">
-                        <a href="#"><i class="fas fa-user-graduate"></i> <span> Dashboard</span></a>
+                     <li>
+                        <a href="/Hod/home"><i class="fas fa-user-graduate"></i> <span>Dashboard</span></a>
+
+                        
                         {% comment %} <ul>
                            <li><a href="index.html" class="active">Admin Dashboard</a></li>
                            <li><a href="teacher-dashboard.html">Teacher Dashboard</a></li>
@@ -20,7 +22,7 @@
                         <ul>
                            <li><a href="students.html">Student List</a></li>
                            <li><a href="student-details.html">Student View</a></li>
-                           <li><a href="add-student.html">Student Add</a></li>
+                           <li><a href="{% url 'add_student_path' %}">Student Add</a></li>
                            <li><a href="edit-student.html">Student Edit</a></li>
                         </ul>
                      </li>

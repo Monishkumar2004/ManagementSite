@@ -99,11 +99,11 @@ def update_profile(request):
             customuser.save()
 
             messages.success(request, "Profile updated successfully !")
-            redirect('profile_path')
+            return redirect('profile_path')
 
 
         except:
             messages.error(request, "Profile updation failed !")
-            redirect('profile_path')
+            return redirect('profile_path')
     return render(request, "profile.html")
     
