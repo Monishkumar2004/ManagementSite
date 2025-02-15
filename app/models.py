@@ -55,30 +55,69 @@ class Session_Year(models.Model):
     session_start = models.CharField(max_length = 100)
     session_end = models.CharField(max_length = 100)
 
-
 class Student(models.Model):
     """
     Represents a student in the school.
 
     Attributes:
-        admin (OneToOneField): A one-to-one relationship with the CustomUser model, providing authentication and user details.  Uses CASCADE to delete student when the related user is deleted.
-        address (TextField): The student's address.
+        admin (OneToOneField): A one-to-one relationship with the CustomUser model.
         gender (CharField): The student's gender. Max length of 100 characters.
-        course_id (ForeignKey): A foreign key to the Course model, representing the course the student is enrolled in.  Uses DO_NOTHING to prevent accidental deletion of courses affecting student records (though this might need review depending on desired behavior).
-        Session_Year_id (ForeignKey): A foreign key to the Session_Year model, representing the academic session the student is enrolled in. Uses DO_NOTHING for similar reasons as course_id.
-        created_at (DateTimeField): The date and time when the student record was created.
+        date_of_birth (DateField): The student's date of birth.
+        course_id (ForeignKey): A foreign key to the Course model.
+        joined_at (DateTimeField): The date and time when the student joined.
+        mobile_number (CharField): The student's mobile number, allowing for formatting.
+        admission_number (CharField): The student's admission number.
+        section (CharField): The student's section. Max length of 20 characters.
+        father_name (CharField): The father's name. Max length of 100 characters.
+        mother_name (CharField): The mother's name. Max length of 100 characters.
+        father_occupation (CharField): Father's occupation. Max length of 100 characters.
+        mother_occupation (CharField): Mother's occupation. Max length of 100 characters.
+        father_mobile (CharField): Father's mobile number, allowing for formatting.
+        mother_mobile (CharField): Mother's mobile number, allowing for formatting.
+        father_email (EmailField): Father's email.
+        mother_email (EmailField): Mother's email.
+        present_address (TextField): The student's present address.
+        permanent_address (TextField): The student's permanent address.
+        Session_Year_id (ForeignKey): A foreign key to the Session_Year model.
         updated_at (DateTimeField): The date and time when the student record was last updated.
 
     Methods:
-        __str__(): Returns the student's full name (first name and last name) as a string representation.
+        __str__(): Returns the student's full name as a string representation.
     """
+    
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    address = models.TextField()
     gender = models.CharField(max_length=100)
-    course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
-    Session_Year_id = models.ForeignKey(Session_Year, on_delete=models.DO_NOTHING)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now = True)
+    date_of_birth = models.DateField(null=True, blank=True)  # Changed to DateField for better date handling
+    course_id = models.ForeignKey('Course', on_delete=models.DO_NOTHING)
+    
+    joined_at = models.DateTimeField(auto_now_add=True)
+    
+    mobile_number = models.CharField(max_length=15, blank=True, null=True)  # Allowing for formatting
+    admission_number = models.CharField(max_length=50, unique=True, null=True, blank=True, default='TEMP')  # Admission numbers may not be strictly numeric
+    section = models.CharField(max_length=20, blank=True, null=True)
+    
+    father_name = models.CharField(max_length=100, blank=True, null=True)
+    mother_name = models.CharField(max_length=100, blank=True, null=True)
+    
+    father_occupation = models.CharField(max_length=100, blank=True, null=True)
+    mother_occupation = models.CharField(max_length=100, blank=True, null=True)
+    
+    father_mobile = models.CharField(max_length=15, blank=True, null=True)  # Allowing for formatting
+    mother_mobile = models.CharField(max_length=15, blank=True, null=True)  # Allowing for formatting
+    
+    father_email = models.EmailField(max_length=100, blank=True, null=True)  # Changed to EmailField
+    mother_email = models.EmailField(max_length=100, blank=True, null=True)  # Changed to EmailField
+    
+    present_address = models.TextField(blank=True, null=True)
+    permanent_address = models.TextField(blank=True, null=True)
+    
+    Session_Year_id = models.ForeignKey('Session_Year', on_delete=models.DO_NOTHING, blank=True, null=True)
+    
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.admin.first_name + " " + self.admin.last_name
+        return f"{self.admin.first_name} {self.admin.last_name}"
+
+    class Meta:
+        verbose_name = "Student"
+        verbose_name_plural = "Students"
