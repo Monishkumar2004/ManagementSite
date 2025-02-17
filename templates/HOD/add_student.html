@@ -6,21 +6,65 @@
                   <div class="col-sm-12">
                      <div class="card">
                         <div class="card-body">
-                           <form>
+                           <form method = "POST" action = "{% url "add_student_path" %}" enctype = "multipart/form-data">
+                           {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
                                     <h5 class="form-title"><span>Student Information</span></h5>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+
+                                   {% comment %} Error message for Profile Updation {% endcomment %}
+                  {% if messages %}
+                                 {% for message in messages%}
+
+                                    {% if message.tags == "warning" %}
+                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
+
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                    </button>
+
+                              </div>
+                                    {% endif %}
+
+                                 {% endfor %}
+                              {% endif %}
+                   {% comment %} Success message for Profile Updation {% endcomment %}
+                  {% if messages %}
+                                 {% for message in messages%}
+
+                                    {% if message.tags == "success" %}
+                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
+
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                    </button>
+
+                              </div>
+                                    {% endif %}
+
+                                 {% endfor %}
+                              {% endif %}
+
+
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
-                                       <label>First Name</label>
-                                       <input type="text" class="form-control">
+                                       <label>Student Image</label>
+                                       <input name = "student_image" type="file" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
+                                    <div class="form-group">
+                                       <label>First Name</label>
+                                       <input name = "first_name" type="text" class="form-control">
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Last Name</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "last_name" type="text" class="form-control">
                                     </div>
                                  </div>
                                  {% comment %} <div class="col-12 col-sm-6">
@@ -29,29 +73,61 @@
                                        <input type="text" class="form-control">
                                     </div> 
                                  </div> {% endcomment %}
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Gender</label>
-                                       <select class="form-control">
+                                       <select class="form-control" name = "gender">
                                           <option>Select Gender</option>
-                                          <option>Female</option>
-                                          <option>Male</option>
-                                          <option>Others</option>
+                                          <option value = "female">Female</option>
+                                          <option value = "male">Male</option>
+                                          <option value = "others">Others</option>
                                        </select>
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Date of Birth</label>
                                        <div>
-                                          <input type="date" class="form-control">
+                                          <input name = "date_of_birth" type="date" class="form-control">
                                        </div>
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 {% comment %} <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Class</label>
                                        <input type="text" class="form-control">
+                                    </div>
+                                 </div> {% endcomment %}
+                                 <div class="col-12 col-sm-11">
+                                    <div class="form-group">
+                                       <label>Grade</label>
+                                       <select class="form-control" name = "grade">
+                                          <option>Select Grade</option>
+                                          {% for i in courses %}
+                                          <option value = "{{i.id}}">{{i.name}}</option>
+                                          {% endfor %}
+                                       </select>
+                                    </div>
+                                 </div>
+
+                                 <div class="col-12 col-sm-11">
+                                    <div class="form-group">
+                                       <label>Email</label>
+                                       <input name = "email" type="email" class="form-control">
+                                    </div>
+                                 </div>
+
+                                 <div class="col-12 col-sm-11">
+                                    <div class="form-group">
+                                       <label>Username</label>
+                                       <input name = "username" type="text" class="form-control">
+                                    </div>
+                                 </div>
+
+                                 <div class="col-12 col-sm-11">
+                                    <div class="form-group">
+                                       <label>password</label>
+                                       <input name = "password" type="password" class="form-control">
                                     </div>
                                  </div>
                                  {% comment %} <div class="col-12 col-sm-6">
@@ -60,99 +136,94 @@
                                        <input type="text" class="form-control">
                                     </div>
                                  </div> {% endcomment %}
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Joining Date</label>
                                        <div>
-                                          <input type="date" class="form-control">
+                                          <input name = "joining_date" type="date" class="form-control">
                                        </div>
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Mobile Number</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "mobile_number" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Admission Number</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "admission_number" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Section</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "section" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Student Image</label>
-                                       <input type="file" class="form-control">
-                                    </div>
-                                 </div>
+                                 
                                  <div class="col-12">
                                     <h5 class="form-title"><span>Parent Information</span></h5>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Father's Name</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "father_name" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Father's Occupation</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "father_occupation" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Father's Mobile</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "father_mobile" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Father's Email</label>
-                                       <input type="email" class="form-control">
+                                       <input name = "father_email" type="email" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Mother's Name</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "mother_name" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Mother's Occupation</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "mother_occupation" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Mother's Mobile</label>
-                                       <input type="text" class="form-control">
+                                       <input name = "mother_mobile"  type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Mother's Email</label>
-                                       <input type="email" class="form-control">
+                                       <input name = "mother_email" type="email" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Present Address</label>
-                                       <textarea class="form-control"></textarea>
+                                       <textarea name = "present_address" class="form-control"></textarea>
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-6">
+                                 <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Permanent Address</label>
-                                       <textarea class="form-control"></textarea>
+                                       <textarea name = "permanent_address" class="form-control"></textarea>
                                     </div>
                                  </div>
                                  <div class="col-12">

@@ -55,31 +55,12 @@ class Session_Year(models.Model):
     session_start = models.CharField(max_length = 100)
     session_end = models.CharField(max_length = 100)
 
+    def __str__(self):
+        return self.session_start + " to " + self.session_end
+
 class Student(models.Model):
     """
     Represents a student in the school.
-
-    Attributes:
-        admin (OneToOneField): A one-to-one relationship with the CustomUser model.
-        gender (CharField): The student's gender. Max length of 100 characters.
-        date_of_birth (DateField): The student's date of birth.
-        course_id (ForeignKey): A foreign key to the Course model.
-        joined_at (DateTimeField): The date and time when the student joined.
-        mobile_number (CharField): The student's mobile number, allowing for formatting.
-        admission_number (CharField): The student's admission number.
-        section (CharField): The student's section. Max length of 20 characters.
-        father_name (CharField): The father's name. Max length of 100 characters.
-        mother_name (CharField): The mother's name. Max length of 100 characters.
-        father_occupation (CharField): Father's occupation. Max length of 100 characters.
-        mother_occupation (CharField): Mother's occupation. Max length of 100 characters.
-        father_mobile (CharField): Father's mobile number, allowing for formatting.
-        mother_mobile (CharField): Mother's mobile number, allowing for formatting.
-        father_email (EmailField): Father's email.
-        mother_email (EmailField): Mother's email.
-        present_address (TextField): The student's present address.
-        permanent_address (TextField): The student's permanent address.
-        Session_Year_id (ForeignKey): A foreign key to the Session_Year model.
-        updated_at (DateTimeField): The date and time when the student record was last updated.
 
     Methods:
         __str__(): Returns the student's full name as a string representation.
