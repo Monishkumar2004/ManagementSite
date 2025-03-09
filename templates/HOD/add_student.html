@@ -6,7 +6,7 @@
                   <div class="col-sm-12">
                      <div class="card">
                         <div class="card-body">
-                           <form method = "POST" action = "{% url "add_student_path" %}" enctype = "multipart/form-data">
+                           <form method = "POST" action = "{% url "add_student_path" %}" enctype = "multipart/form-data" onsubmit="return validate_Form()">
                            {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
@@ -14,41 +14,7 @@
                                  </div>
 
                                    {% comment %} Error message for Profile Updation {% endcomment %}
-                  {% if messages %}
-                                 {% for message in messages%}
-
-                                    {% if message.tags == "warning" %}
-                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-
-                                    {{ message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                       <span aria-hidden="true">&times;</span>
-                                    </button>
-
-                              </div>
-                                    {% endif %}
-
-                                 {% endfor %}
-                              {% endif %}
-                   {% comment %} Success message for Profile Updation {% endcomment %}
-                  {% if messages %}
-                                 {% for message in messages%}
-
-                                    {% if message.tags == "success" %}
-                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-
-                                    {{ message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                       <span aria-hidden="true">&times;</span>
-                                    </button>
-
-                              </div>
-                                    {% endif %}
-
-                                 {% endfor %}
-                              {% endif %}
-
-
+                                    {% include 'includes/messages.html' %}
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Student Image</label>
@@ -58,25 +24,20 @@
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>First Name</label>
-                                       <input name = "first_name" type="text" class="form-control">
+                                       <input name = "first_name" type="text" class="form-control" required>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Last Name</label>
-                                       <input name = "last_name" type="text" class="form-control">
+                                       <input name = "last_name" type="text" class="form-control" required>
                                     </div>
                                  </div>
-                                 {% comment %} <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Student Id</label>
-                                       <input type="text" class="form-control">
-                                    </div> 
-                                 </div> {% endcomment %}
+                                 
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Gender</label>
-                                       <select class="form-control" name = "gender">
+                                       <select class="form-control" name = "gender" required>
                                           <option>Select Gender</option>
                                           <option value = "female">Female</option>
                                           <option value = "male">Male</option>
@@ -88,23 +49,18 @@
                                     <div class="form-group">
                                        <label>Date of Birth</label>
                                        <div>
-                                          <input name = "date_of_birth" type="date" class="form-control">
+                                          <input name = "date_of_birth" type="date" class="form-control" required>
                                        </div>
                                     </div>
                                  </div>
-                                 {% comment %} <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Class</label>
-                                       <input type="text" class="form-control">
-                                    </div>
-                                 </div> {% endcomment %}
+                                 
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Grade</label>
-                                       <select class="form-control" name = "grade">
+                                       <select class="form-control" name = "grade" required>
                                           <option>Select Grade</option>
                                           {% for i in courses %}
-                                          <option value = "{{i.id}}">{{i.name}}</option>
+                                          <option value = "{{i.id}}" >{{i.name}}</option>
                                           {% endfor %}
                                        </select>
                                     </div>
@@ -113,113 +69,113 @@
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Email</label>
-                                       <input name = "email" type="email" class="form-control">
+                                       <input name = "email" type="email" class="form-control" required>
                                     </div>
                                  </div>
 
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Username</label>
-                                       <input name = "username" type="text" class="form-control">
+                                       <input name = "username" type="text" class="form-control" required>
                                     </div>
                                  </div>
 
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>password</label>
-                                       <input name = "password" type="password" class="form-control">
+                                       <input name = "password" type="password" class="form-control" required>
                                     </div>
                                  </div>
-                                 {% comment %} <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Religion</label>
-                                       <input type="text" class="form-control">
-                                    </div>
-                                 </div> {% endcomment %}
-                                 <div class="col-12 col-sm-11">
+                                 
+                                 <!-- <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Joining Date</label>
                                        <div>
                                           <input name = "joining_date" type="date" class="form-control">
                                        </div>
                                     </div>
-                                 </div>
+                                 </div> -->
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Mobile Number</label>
-                                       <input name = "mobile_number" type="text" class="form-control">
+                                       <input name = "mobile_number" type="text" class="form-control" required>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Admission Number</label>
-                                       <input name = "admission_number" type="text" class="form-control">
+                                       <input name = "admission_number" type="text" class="form-control" required>
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-11">
-                                    <div class="form-group">
-                                       <label>Section</label>
-                                       <input name = "section" type="text" class="form-control">
-                                    </div>
-                                 </div>
-                                 
-                                 <div class="col-12">
-                                    <h5 class="form-title"><span>Parent Information</span></h5>
-                                 </div>
+                                
+
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Father's Name</label>
                                        <input name = "father_name" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-11">
-                                    <div class="form-group">
-                                       <label>Father's Occupation</label>
-                                       <input name = "father_occupation" type="text" class="form-control">
-                                    </div>
-                                 </div>
+
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Father's Mobile</label>
                                        <input name = "father_mobile" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-11">
-                                    <div class="form-group">
-                                       <label>Father's Email</label>
-                                       <input name = "father_email" type="email" class="form-control">
-                                    </div>
-                                 </div>
+
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Mother's Name</label>
                                        <input name = "mother_name" type="text" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-11">
-                                    <div class="form-group">
-                                       <label>Mother's Occupation</label>
-                                       <input name = "mother_occupation" type="text" class="form-control">
-                                    </div>
-                                 </div>
+                                 
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Mother's Mobile</label>
                                        <input name = "mother_mobile"  type="text" class="form-control">
                                     </div>
-                                 </div>
-                                 <div class="col-12 col-sm-11">
-                                    <div class="form-group">
-                                       <label>Mother's Email</label>
-                                       <input name = "mother_email" type="email" class="form-control">
-                                    </div>
-                                 </div>
+                                 </div>      
+
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Present Address</label>
                                        <textarea name = "present_address" class="form-control"></textarea>
                                     </div>
                                  </div>
+
+                                 <div class="col-12">
+                                    <h5 class="form-title"><span>Optional Information</span></h5>
+                                 </div>
+                                 
+                                 <div class="col-12 col-sm-11">
+                                    <div class="form-group">
+                                       <label>Father's Occupation</label>
+                                       <input name = "father_occupation" type="text" class="form-control">
+                                    </div>
+                                 </div>
+                                 
+                                 <div class="col-12 col-sm-11">
+                                    <div class="form-group">
+                                       <label>Father's Email</label>
+                                       <input name = "father_email" type="email" class="form-control">
+                                    </div>
+                                 </div>
+                                 
+                                 <div class="col-12 col-sm-11">
+                                    <div class="form-group">
+                                       <label>Mother's Occupation</label>
+                                       <input name = "mother_occupation" type="text" class="form-control">
+                                    </div>
+                                 </div>
+                                 
+                                 <div class="col-12 col-sm-11">
+                                    <div class="form-group">
+                                       <label>Mother's Email</label>
+                                       <input name = "mother_email" type="email" class="form-control">
+                                    </div>
+                                 </div>
+                                 
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Permanent Address</label>
@@ -231,6 +187,54 @@
                                  </div>
                               </div>
                            </form>
+                           <script>
+                              function validate_Form(){
+                                 // get required fields
+                                 var first_name = document.getElementById("first_name").value;
+                                 var last_name = document.getElementById("last_name").value;
+                                 var gender = document.getElementById("gender").value;
+                                 var date_of_birth = document.getElementById("date_of_birth").value;
+                                 var grade = document.getElementById("grade").value;
+                                 var email = document.getElementById("email").value;
+                                 var username = document.getElementById("username").value;
+                                 var password = document.getElementById("password").value;
+                                 var mobile_number = document.getElementById("mobile_number").value;
+                                 var admission_number = document.getElementById("admission_number").value;
+                                 var father_name = document.getElementById("father_name").value;
+                                 var father_mobile = document.getElementById("father_mobile").value;
+                                 var mother_name =  document.getElementById("mother_name").value;
+                                 var mother_mobile =  document.getElementById("mother_mobile").value;
+                                 var present_address =  document.getElementById("present_address").value;
+                                 
+                                  // Check if required fields are filled
+      if (!first_name || !last_name || !gender || !date_of_birth || !grade || !email || !username || !password || !mobile_number || !admission_number || !father_name || !father_mobile || !mother_name || !mother_mobile || !present_address) {
+         alert("Please fill all the required fields.");
+         return false;
+      }
+
+      // Validate email format
+      var email_pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!email.match(email_pattern)) {
+         alert("Please enter a valid email address.");
+         return false;
+      }
+
+      // Validate mobile number (assuming it's a 10-digit number)
+      var mobile_pattern = /^[0-9]{10}$/;
+      if (!mobile_number.match(mobile_pattern)) {
+         alert("Please enter a valid mobile number (10 digits).");
+         return false;
+      }
+
+      // Validate password (check length and complexity if needed)
+      if (password.length < 6) {
+         alert("Password must be at least 6 characters long.");
+         return false;
+      }
+
+      return true; // If all validations pass
+                              }
+                           </script>
                         </div>
                      </div>
                   </div>

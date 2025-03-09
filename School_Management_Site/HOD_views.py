@@ -39,7 +39,7 @@ def add_student(request):
         email = request.POST.get('email')
         username = request.POST.get("username")
         password = request.POST.get('password')
-        joining_date = request.POST.get("joining_date")
+        # joining_date = request.POST.get("joining_date")
         mobile_number = request.POST.get("mobile_number")
         admission_number = request.POST.get("admission_number")
         section = request.POST.get("section")
@@ -57,8 +57,9 @@ def add_student(request):
         if CustomUser.objects.filter(email=email).exists():
             messages.warning(request, "Email already registered !")
             return redirect("add_student_path")
+            
         if CustomUser.objects.filter(username=username).exists():
-            messages.warning(request, "Usernae already taken !")
+            messages.warning(request, "Username already taken !")
             return redirect("add_student_path")
         else:
             user = CustomUser(
@@ -79,7 +80,7 @@ def add_student(request):
                 gender = gender,
                 date_of_birth = date_of_birth,
                 course_id = course,
-                joining_date = joining_date,
+                # joining_date = joining_date,
                 mobile_number = mobile_number,
                 admission_number = admission_number,
                 section = section,
@@ -96,7 +97,7 @@ def add_student(request):
 
             )
             student.save()
-            messages.success(request, "student added successfully !" )
+            messages.success(request, user.first_name + " " + user.last_name + " is added successfully." )
             return redirect("add_student_path")
 
 
@@ -108,3 +109,10 @@ def add_student(request):
 
 
     return render(request, 'HOD/add_student.html', context)
+
+def view_student(request):
+    student = Student.objects.all()
+    context = {
+        'student': student
+    }
+    return render(request, 'HOD/view_student.html', context)
