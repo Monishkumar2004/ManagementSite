@@ -6,7 +6,7 @@
                   <div class="col-sm-12">
                      <div class="card">
                         <div class="card-body">
-                           <form method = "POST" action = "{% url "add_student_path" %}" enctype = "multipart/form-data" onsubmit="return validate_Form()">
+                           <form method = "POST" action = "{% url "update_student_path" %}" enctype = "multipart/form-data" onsubmit="return validate_Form()">
                            {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
@@ -14,7 +14,7 @@
                                  </div>
 
                                    {% comment %} Error message for Profile Updation {% endcomment %}
-                                    {% include 'includes/messages.html' %}
+                                    <!-- {% include 'includes/messages.html' %} -->
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Student Image</label>
@@ -24,13 +24,15 @@
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>First Name</label>
-                                       <input name = "first_name" type="text" value = "{{student.admin.first_name}}" class="form-control" required>
+                                       <input name = "first_name" type="text" value = "{{student.admin.first_name}}" class="form-control" >
+                                       <input name = "student_id" type="text" value = "{{student.admin.id}}" class="form-control" hidden>
+
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Last Name</label>
-                                       <input name = "last_name" type="text" class="form-control" value = "{{student.admin.last_name}}" required>
+                                       <input name = "last_name" type="text" class="form-control" value = "{{student.admin.last_name}}" >
                                     </div>
                                  </div>
                                  
@@ -57,7 +59,7 @@
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Grade</label>
-                                       <select class="form-control" name="course" required>
+                                       <select class="form-control" name="course">
                                           <option>Select Grade</option>
                                           {% for i in course %}
                                           <option value="{{ i.id }}" {% if student.course_id and student.course_id.id == i.id %}selected{% endif %}>
@@ -72,14 +74,14 @@
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Email</label>
-                                       <input name = "email" type="email" class="form-control" value = "{{student.admin.email}}" required>
+                                       <input name = "email" type="email" class="form-control" value = "{{student.admin.email}}" >
                                     </div>
                                  </div>
 
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Username</label>
-                                       <input name = "username" type="text" class="form-control" value = "{{student.admin.username}}" required>
+                                       <input name = "username" type="text" class="form-control" value = "{{student.admin.username}}" >
                                     </div>
                                  </div>
 
@@ -100,7 +102,7 @@
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Admission Number</label>
-                                       <input name = "admission_number" type="text" class="form-control" value = "{{student.admission_number}}" required>
+                                       <input name = "admission_number" type="text" class="form-control" value = "{{student.admission_number}}" >
                                     </div>
                                  </div>
                                 

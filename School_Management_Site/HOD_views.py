@@ -130,3 +130,78 @@ def edit_student(request, id):
         print(profile_pic)
 
     return render(request, 'HOD/edit_student.html', context)
+
+
+def update_student(request):
+
+    course = Course.objects.all()
+
+    if request.method == "POST":
+        student_id = request.POST.get("student_id")
+        profile_pic = request.FILES.get("profile_pic")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        gender = request.POST.get("gender")
+        date_of_birth = request.POST.get("date_of_birth")
+        course_id = request.POST.get("course")
+        email = request.POST.get('email')
+        username = request.POST.get("username")
+        password = request.POST.get('password')
+        # joining_date = request.POST.get("joining_date")
+        mobile_number = request.POST.get("mobile_number")
+        admission_number = request.POST.get("admission_number")
+        section = request.POST.get("section")
+        father_name = request.POST.get("father_name")
+        father_occupation = request.POST.get("father_occupation")
+        father_mobile = request.POST.get("father_mobile")
+        father_email = request.POST.get("father_email")
+        mother_name = request.POST.get("mother_name")
+        mother_occupation = request.POST.get("mother_occupation")
+        mother_mobile = request.POST.get("mother_mobile")
+        mother_email = request.POST.get("mother_email")
+        present_address = request.POST.get("present_address")
+        permanent_address = request.POST.get("permanent_address")
+
+        user = CustomUser.objects.get(id = student_id)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.username = username
+
+        if password != None and password != "":
+                user.set_password(password)
+
+        if profile_pic != None and profile_pic != "":
+                user.profile_pic = profile_pic
+
+        user.save()
+
+        course_instance = Course.objects.get(id = course_id)
+
+        student = Student.objects.get(admin = student_id)
+        student.gender = gender
+        student.date_of_birth = date_of_birth
+        student.course_id = course_instance 
+                # joining_date = joining_date,
+        student.mobile_number = mobile_number
+        student.admission_number = admission_number
+        student.section = section
+        student.father_name = father_name
+        student.father_occupation = father_occupation
+        student.father_mobile =father_mobile
+        student.father_email = father_email
+        student.mother_name = mother_name
+        student.mother_occupation = mother_occupation
+        student.mother_mobile = mother_mobile
+        student.mother_email = mother_email
+        student.present_address = present_address
+        student.permanent_address = permanent_address
+
+        student.save()
+        messages.success(request, "Record is updated Successfully.")
+        return redirect("view_student_path")
+    
+
+        
+
+    return render(request, 'HOD/edit_student.html')
