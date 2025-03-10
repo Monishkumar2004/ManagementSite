@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
 <div class="content container-fluid">
     <div class="page-header">
        <div class="row align-items-center">
@@ -43,7 +44,14 @@
                             <td>{{i.admission_number}}</td>
                             <td>
                                <h2 class="table-avatar">
-                                  <a href="student-details.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="/{{i.admin.profile_pic}}" alt="User Image"></a>
+                                  <a href="student-details.html" class="avatar avatar-sm mr-2">
+                                    {% if i.admin.profile_pic %}
+                                    <img class="avatar-img rounded-circle" src="{{ i.admin.profile_pic.url }}" alt="Image">
+                                    {% else %}
+                                    <img class="avatar-img rounded-circle" src="{% static 'assets/img/default.jpg' %}" alt="Image">
+                                    {% endif %}
+
+                                 </a>
                                   <a href="student-details.html">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</a>
                                </h2>
                             </td>
@@ -56,7 +64,7 @@
                             <td>{{i.admin.Updated_at}}</td>
                             <td class="text-right">
                                <div class="actions">
-                                  <a href="edit-student.html" class="btn btn-sm bg-success-light mr-2">
+                                  <a href="{% url 'edit_student_path' i.id %}" class="btn btn-sm bg-success-light mr-2">
                                   <i class="fas fa-pen"></i>
                                   </a>
                                   <a href="#" class="btn btn-sm bg-danger-light">

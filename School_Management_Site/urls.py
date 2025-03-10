@@ -36,6 +36,8 @@ urlpatterns = [
     # HOD paths
     path('Hod/home/', HOD_views.home, name = "hod_home"),
     path('Hod/add_student/', HOD_views.add_student, name = "add_student_path" ),
-    path('Hod/view_student/', HOD_views.view_student, name = "view_student_path")
+    path('Hod/view_student/', HOD_views.view_student, name = "view_student_path"),
+    path('Hod/edit_student/<str:id>', HOD_views.edit_student, name = "edit_student_path"),
+
 
 ] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)

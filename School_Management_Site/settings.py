@@ -137,7 +137,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"  # This should NOT be inside a tuple
 MEDIA_URL = '/media/'
 
 # Path where media files are stored
-MEDIA_ROOT = BASE_DIR/ 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 

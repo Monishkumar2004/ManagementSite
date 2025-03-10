@@ -35,7 +35,7 @@ def add_student(request):
         last_name = request.POST.get("last_name")
         gender = request.POST.get("gender")
         date_of_birth = request.POST.get("date_of_birth")
-        course_id = request.POST.get("grade")
+        course_id = request.POST.get("course")
         email = request.POST.get('email')
         username = request.POST.get("username")
         password = request.POST.get('password')
@@ -116,3 +116,17 @@ def view_student(request):
         'student': student
     }
     return render(request, 'HOD/view_student.html', context)
+
+def edit_student(request, id):
+    student = Student.objects.get(id = id)
+    course = Course.objects.all()
+    context = {
+        'student' : student,
+        'course' : course,
+    }
+
+    if request.method == "POST":
+        profile_pic = request.FILES.get('profile_pic')
+        print(profile_pic)
+
+    return render(request, 'HOD/edit_student.html', context)
