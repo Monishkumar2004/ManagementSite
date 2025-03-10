@@ -69,7 +69,7 @@
                                   <a href="{% url 'edit_student_path' i.id %}" class="btn btn-sm bg-success-light mr-2">
                                   <i class="fas fa-pen"></i>
                                   </a>
-                                  <a href="#" class="btn btn-sm bg-danger-light">
+                                  <a href="{% url 'delete_student_path' i.admin.id %}" class="btn btn-sm bg-danger-light">
                                   <i class="fas fa-trash"></i>
                                   </a>
                                </div>

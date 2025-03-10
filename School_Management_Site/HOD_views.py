@@ -205,3 +205,10 @@ def update_student(request):
         
 
     return render(request, 'HOD/edit_student.html')
+
+
+def delete_student(request, id):
+     student = CustomUser.objects.get(id = id)
+     student.delete()
+     messages.success(request, "Student deleted Successfully.")
+     return redirect("view_student_path")

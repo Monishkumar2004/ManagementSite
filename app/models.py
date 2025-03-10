@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
     user_type = models.CharField(choices=USER, max_length=50, default=1)  # Default user type is HOD
 
     # Field to store profile picture of the user
-    profile_pic = models.ImageField(upload_to="profile_pics", default="assets\img\default.jpg")  # Uploads profile pictures to specified directory
+    profile_pic = models.ImageField(upload_to="profile_pics")  # Uploads profile pictures to specified directory
 
 class Course(models.Model):
     """
