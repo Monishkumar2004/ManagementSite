@@ -1,46 +1,37 @@
-"""
-URL configuration for School_Management_Site project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+# Import necessary modules for URL configuration
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+
+# Import views from different modules
 from . import views, HOD_views, Staff_views, Student_views
 
+# List of URL patterns
 urlpatterns = [
+    # URL for the admin interface
     path('admin/', admin.site.urls),
-    path('base/', views.base, name = "base"),
 
-    # login paths
-    path('', views.login_view, name = "login_path"),
-    path('doLogin/', views.doLogin, name = "doLogin"),
-    path('doLogout/', views.doLogout, name = "doLogout_path"),
+    # URL for the base template
+    path('base/', views.base, name="base"),
 
-    # Profile path
-    path('profile/', views.profile, name = "profile_path"),
-    path('update_profile/', views.update_profile, name = "update_profile_path"),
+    # Login-related URLs
+    path('', views.login_view, name="login_path"),  # Login page
+    path('doLogin/', views.doLogin, name="doLogin"),  # Handle login logic
+    path('doLogout/', views.doLogout, name="doLogout_path"),  # Handle logout logic
 
-    # HOD paths
-    path('Hod/home/', HOD_views.home, name = "hod_home"),
-    path('Hod/add_student/', HOD_views.add_student, name = "add_student_path" ),
-    path('Hod/view_student/', HOD_views.view_student, name = "view_student_path"),
-    path('Hod/edit_student/<str:id>', HOD_views.edit_student, name = "edit_student_path"),
-    path('HOD/update_student/', HOD_views.update_student, name = "update_student_path"),
-    path('HOD/delete_student/<str:id>', HOD_views.delete_student, name = "delete_student_path"),
-    
-    path('Hod/Grade/Add/', HOD_views.add_course, name = "add_grade_path"),
+    # Profile-related URLs
+    path('profile/', views.profile, name="profile_path"),  # View user profile
+    path('update_profile/', views.update_profile, name="update_profile_path"),  # Update user profile
 
-] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
+    # HOD-related URLs
+    path('Hod/home/', HOD_views.home, name="hod_home"),  # HOD home page
+    path('Hod/add_student/', HOD_views.add_student, name="add_student_path"),  # Add a new student
+    path('Hod/view_student/', HOD_views.view_student, name="view_student_path"),  # View all students
+    path('Hod/edit_student/<str:id>', HOD_views.edit_student, name="edit_student_path"),  # Edit a student's details
+    path('HOD/update_student/', HOD_views.update_student, name="update_student_path"),  # Update a student's details
+    path('HOD/delete_student/<str:id>', HOD_views.delete_student, name="delete_student_path"),  # Delete a student
+    path('Hod/Grade/Add/', HOD_views.add_course, name="add_grade_path"),  # Add a new course
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files (e.g., images) from the MEDIA_ROOT directory
