@@ -25,7 +25,15 @@ class CustomUser(AbstractUser):
     # Field to store profile picture of the user
     profile_pic = models.ImageField(upload_to="profile_pics")  # Uploads profile pictures to specified directory
 
-class Course(models.Model):
+
+class Subject(models.Model):
+    name  =models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Grade(models.Model):
     """
     Represents a course offered in the school.
 
@@ -38,6 +46,7 @@ class Course(models.Model):
         __str__():  Returns the name of the course as a string representation of the object.  This is useful for displaying the course in the admin panel and other places.
     """
     name = models.CharField(max_length=100)
+    subjects = models.ManyToManyField(Subject, related_name="grades")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -57,6 +66,21 @@ class Session_Year(models.Model):
 
     def __str__(self):
         return self.session_start + " to " + self.session_end
+    
+
+
+def generate_admission_number():
+    last_student = Student.objects.order_by('-id').first() #sorts dtudents in decending order and fetches the newest student
+
+    if last_student:
+        last_number = int(last_student.admission_number.split('-')[-1])
+        new_number = last_number + 1
+    else:
+        new_number = 1
+    
+    return f"ADM-{str(new_number).zfill(4)}"
+    
+
 
 class Student(models.Model):
     """
@@ -69,12 +93,12 @@ class Student(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     gender = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)  # Changed to DateField for better date handling
-    course_id = models.ForeignKey('Course', on_delete=models.DO_NOTHING)
+    grade_id = models.ForeignKey('Grade', on_delete=models.DO_NOTHING)
     
     joined_at = models.DateTimeField(auto_now_add=True)
     
     mobile_number = models.CharField(max_length=15, blank=True, null=True)  # Allowing for formatting
-    admission_number = models.CharField(max_length=50, unique=True, null=True, blank=True, default='TEMP')  # Admission numbers may not be strictly numeric
+    admission_number = models.CharField(max_length=50, unique=True, editable = False ,  default= generate_admission_number)  # Admission numbers may not be strictly numeric
     section = models.CharField(max_length=20, blank=True, null=True)
     
     father_name = models.CharField(max_length=100, blank=True, null=True)

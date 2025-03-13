@@ -59,7 +59,7 @@
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Grade</label>
-                                       <select class="form-control" name="course">
+                                       <select class="form-control" name="grade">
                                           <option>Select Grade</option>
                                           {% for i in course %}
                                           <option value="{{ i.id }}" {% if student.course_id and student.course_id.id == i.id %}selected{% endif %}>

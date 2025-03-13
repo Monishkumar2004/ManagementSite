@@ -57,9 +57,9 @@
                                  <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Grade</label>
-                                       <select class="form-control" name = "course" required>
+                                       <select class="form-control" name = "grade" required>
                                           <option>Select Grade</option>
-                                          {% for i in courses %}
+                                          {% for i in grade %}
                                           <option value = "{{i.id}}" >{{i.name}}</option>
                                           {% endfor %}
                                        </select>
@@ -101,12 +101,12 @@
                                        <input name = "mobile_number" type="text" class="form-control" required>
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-11">
+                                 <!-- <div class="col-12 col-sm-11">
                                     <div class="form-group">
                                        <label>Admission Number</label>
                                        <input name = "admission_number" type="text" class="form-control" required>
                                     </div>
-                                 </div>
+                                 </div> -->
                                 
 
                                  <div class="col-12 col-sm-11">
@@ -207,7 +207,7 @@
                                  var present_address =  document.getElementById("present_address").value;
                                  
                                   // Check if required fields are filled
-      if (!first_name || !last_name || !gender || !date_of_birth || !grade || !email || !username || !password || !mobile_number || !admission_number || !father_name || !father_mobile || !mother_name || !mother_mobile || !present_address) {
+      if (!first_name || !last_name || !gender || !date_of_birth || !grade || !email || !username || !password || !mobile_number || !father_name || !father_mobile || !mother_name || !mother_mobile || !present_address) {
          alert("Please fill all the required fields.");
          return false;
       }

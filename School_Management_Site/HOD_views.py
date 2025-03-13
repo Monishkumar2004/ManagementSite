@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render  # Import necessary modules from Django
 from django.contrib.auth.decorators import login_required  # Import the login_required decorator
-from app.models import Course, Session_Year, CustomUser ,Student
+from app.models import Grade, Session_Year, CustomUser ,Student
 from django.contrib import messages
 # Apply the login_required decorator.
 # This ensures that only authenticated users can access this view.
@@ -26,7 +26,7 @@ def add_student(request):
     '''
     Function to add students only accessible to the HOD
     '''
-    courses = Course.objects.all()
+    grade = Grade.objects.all()
     sessions = Session_Year.objects.all()
 
     if request.method == "POST":
@@ -35,13 +35,13 @@ def add_student(request):
         last_name = request.POST.get("last_name")
         gender = request.POST.get("gender")
         date_of_birth = request.POST.get("date_of_birth")
-        course_id = request.POST.get("course")
+        grade = request.POST.get("grade")
         email = request.POST.get('email')
         username = request.POST.get("username")
         password = request.POST.get('password')
         # joining_date = request.POST.get("joining_date")
         mobile_number = request.POST.get("mobile_number")
-        admission_number = request.POST.get("admission_number")
+        # admission_number = request.POST.get("admission_number")
         section = request.POST.get("section")
         father_name = request.POST.get("father_name")
         father_occupation = request.POST.get("father_occupation")
@@ -73,16 +73,16 @@ def add_student(request):
             user.set_password(password)
             user.save()
 
-            course = Course.objects.get(id = course_id)
+            grade = Grade.objects.get(id = grade)
 
             student = Student(
                 admin = user,
                 gender = gender,
                 date_of_birth = date_of_birth,
-                course_id = course,
+                grade_id = grade,
                 # joining_date = joining_date,
                 mobile_number = mobile_number,
-                admission_number = admission_number,
+                # admission_number = admission_number,
                 section = section,
                 father_name = father_name,
                 father_occupation = father_occupation,
@@ -102,7 +102,7 @@ def add_student(request):
 
 
     context = {
-        'courses': courses,
+        'grade': grade,
         'sessions': sessions,
     }
 
@@ -119,10 +119,10 @@ def view_student(request):
 
 def edit_student(request, id):
     student = Student.objects.get(id = id)
-    course = Course.objects.all()
+    grade = Grade.objects.all()
     context = {
         'student' : student,
-        'course' : course,
+        'grade' : grade,
     }
 
     if request.method == "POST":
@@ -134,7 +134,7 @@ def edit_student(request, id):
 
 def update_student(request):
 
-    course = Course.objects.all()
+    grade = Grade.objects.all()
 
     if request.method == "POST":
         student_id = request.POST.get("student_id")
@@ -143,13 +143,13 @@ def update_student(request):
         last_name = request.POST.get("last_name")
         gender = request.POST.get("gender")
         date_of_birth = request.POST.get("date_of_birth")
-        course_id = request.POST.get("course")
+        grade_id = request.POST.get("grade")
         email = request.POST.get('email')
         username = request.POST.get("username")
         password = request.POST.get('password')
         # joining_date = request.POST.get("joining_date")
         mobile_number = request.POST.get("mobile_number")
-        admission_number = request.POST.get("admission_number")
+        # admission_number = request.POST.get("admission_number")
         section = request.POST.get("section")
         father_name = request.POST.get("father_name")
         father_occupation = request.POST.get("father_occupation")
@@ -176,15 +176,15 @@ def update_student(request):
 
         user.save()
 
-        course_instance = Course.objects.get(id = course_id)
+        grade_instance = Grade.objects.get(id = grade_id)
 
         student = Student.objects.get(admin = student_id)
         student.gender = gender
         student.date_of_birth = date_of_birth
-        student.course_id = course_instance 
+        student.grade_id = grade_instance 
                 # joining_date = joining_date,
         student.mobile_number = mobile_number
-        student.admission_number = admission_number
+        # student.admission_number = admission_number  feature changed to automatically add admission number
         student.section = section
         student.father_name = father_name
         student.father_occupation = father_occupation
@@ -212,3 +212,8 @@ def delete_student(request, id):
      student.delete()
      messages.success(request, "Student deleted Successfully.")
      return redirect("view_student_path")
+
+
+def add_course(request):
+     
+    return render(request, 'HOD/add_class.html')

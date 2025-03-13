@@ -41,6 +41,6 @@ urlpatterns = [
     path('HOD/update_student/', HOD_views.update_student, name = "update_student_path"),
     path('HOD/delete_student/<str:id>', HOD_views.delete_student, name = "delete_student_path"),
     
-
+    path('Hod/Grade/Add/', HOD_views.add_course, name = "add_grade_path"),
 
 ] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
